@@ -49,14 +49,17 @@ public class PhantomPing {
                 tasks.add(() -> {
                     while (running) {
                         new PhantomPing().checkSitePerformance(target, url);
-                        Thread.sleep(1000);
+                        Thread.sleep(10000);
                     }
                     return null;
                 });
             });
 
             executor.invokeAll(tasks);
+            executor.awaitTermination(Integer.MAX_VALUE, TimeUnit.DAYS);
         }
+
+        System.out.println("Bye");
     }
 
     private PhantomPing() {
